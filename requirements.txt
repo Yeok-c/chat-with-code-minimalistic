@@ -1,0 +1,3 @@
+langchain
+GitPython
+tiktoken
