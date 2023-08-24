@@ -10,19 +10,21 @@ from langchain.memory import ConversationSummaryMemory
 from langchain.chains import ConversationalRetrievalChain
 # import tiktoken
 from langchain.callbacks import get_openai_callback
+import os, shutil
 
 
 class RepoChat():
-    def __init__(self, codebase_path: str, model_name="gpt-3.5-turbo-16k-0603", suffixes=[".py"]):                
+    def __init__(self, codebase_path: str, model_name="gpt-3.5-turbo-16k", suffixes=[".py", ".ipynb"]):                
         self.model_name = model_name
         self.cb = None
 
-        if "github.com" in codebase_path:
-            print("Cloning repo...")
-            codebase_local_path = "./repo"
+        if "github.com" in codebase_path: # if it is a github
+            codebase_local_path = "./temp_repo/"
+            if os.path.isdir(codebase_local_path): shutil.rmtree(codebase_local_path, )
+            print(f"Cloning from {codebase_path} to {codebase_local_path}")
             repo = Repo.clone_from(codebase_path, to_path=codebase_local_path)
             codebase_path = codebase_local_path
-        else:
+        else: #if it is local
             print("Loading from local repo...")
         
         # Load
@@ -30,7 +32,8 @@ class RepoChat():
             codebase_path,
             glob="**/*",
             suffixes=suffixes,
-            parser=LanguageParser(language=Language.PYTHON, parser_threshold=500)
+            parser=LanguageParser(language=Language.PYTHON, parser_threshold=500),
+            show_progress=True,
         )
         documents = loader.load()
         # len(documents)
@@ -39,7 +42,8 @@ class RepoChat():
                                                                     chunk_size=2000, 
                                                                     chunk_overlap=200,)
         texts = python_splitter.split_documents(documents)
-        len(texts)
+
+        print(f"Loaded {len(documents)} documents, split into {len(texts)} texts. \nLoading into chroma. This may take a while.")
 
         with get_openai_callback() as cb:
             # Set up chroma db and retriever
@@ -54,9 +58,13 @@ class RepoChat():
             memory = ConversationSummaryMemory(llm=llm,memory_key="chat_history",return_messages=True)
             self.qa = ConversationalRetrievalChain.from_llm(llm, retriever=retriever, memory=memory)
         
-        print(f'Setting up codebase used {cb}')
+        print("Repo loaded into langchain.")
         self.update_usage(cb)
-        
+        self.print_usage()
+        result = self.qa("Give a summary of the repo you have access to based on its readme, main program, or any other useful code you can find.")
+        print(result['answer'])
+
+
     def update_usage(self, cb):
         if self.cb is None:
             self.cb = cb
