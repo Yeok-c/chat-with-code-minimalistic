@@ -74,3 +74,11 @@ Exit nano and
 ``` source ~/.bashrc```
 
 You may need to reactivate your conda environment after that
+
+# Other similar repos
+- https://github.com/melih-unsal/DemoGPT
+- https://github.com/openai/chatgpt-retrieval-plugin
+- https://github.com/Yeok-c/llm-search
+- https://github.com/peterw/Chat-with-Github-Repo
+- https://python.langchain.com/docs/use_cases/question_answering/how_to/vector_db_text_generation
+- Next: https://python.langchain.com/docs/use_cases/code_understanding
