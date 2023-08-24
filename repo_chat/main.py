@@ -25,7 +25,7 @@ class RepoChat():
             repo = Repo.clone_from(codebase_path, to_path=codebase_local_path)
             codebase_path = codebase_local_path
         else: #if it is local
-            print("Loading from local repo...")
+            print("Loading from local repo codebase_path")
         
         # Load
         loader = GenericLoader.from_filesystem(

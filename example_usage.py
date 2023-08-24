@@ -12,9 +12,7 @@ if __name__ == "__main__":
         while True:
             question = input("Input: ")
             answer = repollm.chat(question)
-            print("Output: " + answer)
-            print("\n")
-
+            print("\nOutput: " + answer + "\n\n")
     
     except KeyboardInterrupt:
         print(' \nExiting program')
