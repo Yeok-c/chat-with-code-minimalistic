@@ -14,7 +14,7 @@ import os, shutil
 
 
 class RepoChat():
-    def __init__(self, codebase_path: str, model_name="gpt-3.5-turbo-16k", suffixes=[".py", ".ipynb"]):                
+    def __init__(self, codebase_path: str, model_name="gpt-3.5-turbo-16k", suffixes=[".py", ".ipynb", ".md"]):                
         self.model_name = model_name
         self.cb = None
 
@@ -59,8 +59,8 @@ class RepoChat():
             self.qa = ConversationalRetrievalChain.from_llm(llm, retriever=retriever, memory=memory)
         
         print("Repo loaded into langchain.")
-        self.update_usage(cb)
-        self.print_usage()
+        # self.update_usage(cb)
+        # self.print_usage()
         result = self.qa("Give a summary of the repo you have access to based on its readme, main program, or any other useful code you can find.")
         print(result['answer'])
 
