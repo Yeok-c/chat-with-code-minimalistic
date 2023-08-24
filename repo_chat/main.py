@@ -12,7 +12,7 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.callbacks import get_openai_callback
 
 
-class RepoLoader():
+class RepoChat():
     def __init__(self, codebase_path: str, model_name="gpt-3.5-turbo-16k-0603", suffixes=[".py"]):                
         self.model_name = model_name
         self.cb = None
@@ -66,6 +66,12 @@ class RepoLoader():
             self.cb.prompt_tokens += cb.prompt_tokens
             self.cb.completion_tokens += cb.completion_tokens
             self.cb.total_cost += cb.total_cost
+    
+    def print_usage(self):
+        print(f'Total tokens: {self.cb.total_tokens}')
+        print(f'Prompt tokens: {self.cb.prompt_tokens}')
+        print(f'Completion tokens: {self.cb.completion_tokens}')
+        print(f'Total cost: {self.cb.total_cost}')
 
     def chat(self, question):
         with get_openai_callback() as cb:
@@ -75,25 +81,5 @@ class RepoLoader():
 
         return result['answer']
 
-if __name__ == "__main__":
-    repoloader = RepoLoader(
-        codebase_path="https://github.com/Yeok-c/Stewart_Py"
-        # model_name="gpt-3.5-turbo", # default
-        # suffixes=[".py"]  # default
-        )
-    
-    try:
-        while True:
-            question = input("Input: ")
-            answer = repoloader.chat(question)
-            print("Output: " + answer)
-            print("\n")
 
-    
-    except KeyboardInterrupt:
-        print(' \nExiting program')
-        print(f'Total tokens: {repoloader.cb.total_tokens}')
-        print(f'Prompt tokens: {repoloader.cb.prompt_tokens}')
-        print(f'Completion tokens: {repoloader.cb.completion_tokens}')
-        print(f'Total cost: {repoloader.cb.total_cost}')
-        
+                
