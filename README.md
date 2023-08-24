@@ -1,5 +1,8 @@
-# chat-with-code
- Minimal langchain/python code to chat with any github repo or offline codebase
+# RepoChat - Chat with you github repository or offline codebase
+ Minimal langchain/python code to query code or semi-automatically write code
+    - Load codebase into Langchain using Chroma's vectorstore
+    - Search through vectorstore using ConversationalRetrievalChain
+    - Retain conversational memory during chat with ConversationSummaryMemory
 
 # Installation
 ```git clone https://github.com/Yeok-c/repo-chat/```
