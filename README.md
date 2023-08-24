@@ -81,4 +81,4 @@ You may need to reactivate your conda environment after that
 - https://github.com/Yeok-c/llm-search
 - https://github.com/peterw/Chat-with-Github-Repo
 - https://python.langchain.com/docs/use_cases/question_answering/how_to/vector_db_text_generation
-- Next: https://python.langchain.com/docs/use_cases/code_understanding
+- https://python.langchain.com/docs/use_cases/code_understanding
