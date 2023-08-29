@@ -1,4 +1,4 @@
-# RepoChat - Chat with you github repository or offline codebase
+#Chat with code - Chat with you github repository or offline codebase
 Minimal langchain/python code to query code or semi-automatically write code
    - Load codebase into Langchain using Chroma's vectorstore
    - Search through vectorstore using ConversationalRetrievalChain
